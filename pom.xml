@@ -11,11 +11,11 @@
 	<groupId>com.i-novus-bot</groupId>
 	<artifactId>my-test-bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>my-test-bot</name>
 	<description>Hakaton bot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
