@@ -40,7 +40,7 @@ public class AuthService {
                 "&response_type=code" +
                 "&scope=openid%20email";
 
-        // Создание кнопки
+        // Создание кнопки при каждом запросе, ее заранее не создать
         InlineKeyboardButton loginButton = new InlineKeyboardButton();
         loginButton.setText("Войти через Google");
         loginButton.setUrl(oAuthUrl);
@@ -63,8 +63,6 @@ public class AuthService {
         userService.setGoogleToken(userId, googleCode);
         sendGreetingMessage(userId);
     }
-
-
 
     @SneakyThrows
     private void sendGreetingMessage(String userId) {
