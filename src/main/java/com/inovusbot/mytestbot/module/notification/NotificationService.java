@@ -46,8 +46,35 @@ public class NotificationService {
 
     }
 
-    public void turnOnOffNotification(String command, String s) {
+    public void turnOffNotification(String userId) {
+        String text = "Сейчас у тебя включены следующие уведомления:\n" +
+                "Ворклоги в 18:00\n" +
+                "Заказ еды в 9:00\n\n" +
+                "Ты можешь полностью отключить их или до определенного числа.";
 
+        InlineKeyboardButton worklogsButton = new InlineKeyboardButton();
+        worklogsButton.setText("Посмотреть активные уведомления");
+        worklogsButton.setCallbackData("notifications-off-worklogs");
+        List<InlineKeyboardButton> worklogsRow = new ArrayList<>();
+        worklogsRow.add(worklogsButton);
+
+        InlineKeyboardButton lunchButton = new InlineKeyboardButton();
+        lunchButton.setText("Посмотреть активные уведомления");
+        lunchButton.setCallbackData("notifications-off-lunch");
+        List<InlineKeyboardButton> lunchRow = new ArrayList<>();
+        lunchRow.add(lunchButton);
+
+        InlineKeyboardButton backButton = new InlineKeyboardButton();
+        backButton.setText("Назад");
+        backButton.setCallbackData("/notifications");
+        List<InlineKeyboardButton> backRow = new ArrayList<>();
+        backRow.add(backButton);
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(List.of(worklogsRow, lunchRow, backRow));
+
+        messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
+        userService.setContext(userId, "notifications-off");
     }
 
     public void showMenu(String userId) {
@@ -82,6 +109,6 @@ public class NotificationService {
         inlineKeyboardMarkup.setKeyboard(List.of(showRow, createRow, disableRow, backRow));
 
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
-        userService.setContext(userId, "poker-main");
+        userService.setContext(userId, "notifications-main");
     }
 }

@@ -28,8 +28,12 @@ public class NotificationFacade {
                 notificationService.setNotificationTime(userId, command);
                 break;
             }
-            case "notification-turn-on-off": {
-                notificationService.turnOnOffNotification(userId, command);
+            case "notification-turn-on": {
+                notificationService.turnOffNotification(userId);
+                break;
+            }
+            case "notification-turn-off": {
+                notificationService.turnOffNotification(userId);
                 break;
             }
             default: {
