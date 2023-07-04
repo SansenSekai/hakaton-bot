@@ -16,7 +16,7 @@ import static com.inovusbot.mytestbot.config.Commands.ABOUT;
 @Service
 public class AuthService {
     // @Value("${oauth_redirect_url}")
-    private String redirectUrl = "https://i-knowus-santoryu1001.amvera.io:8080/login";
+    private String redirectUrl = "https://iknowus-santoryu1001.amvera.io/login";
     private final MessageSenderService telegramBot;
     private final UserService userService;
 
