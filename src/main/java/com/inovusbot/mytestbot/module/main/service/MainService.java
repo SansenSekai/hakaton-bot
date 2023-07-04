@@ -1,6 +1,7 @@
 package com.inovusbot.mytestbot.module.main.service;
 
 import com.inovusbot.mytestbot.service.MessageSenderService;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -69,6 +70,7 @@ public class MainService {
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
     }
 
+    @SneakyThrows
     public void sendSimpleMessage(String userId) {
         String text = "Ты молодец, продолжай в том же духе!\n\n" +
                 "Как только я пойму чего ты хочешь - я обязательно тебе сообщю.";
@@ -88,6 +90,7 @@ public class MainService {
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
         messageSenderService.sendMessage(userId, text, false);
+        Thread.sleep(100L);
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
     }
 }
