@@ -7,4 +7,5 @@ public class Commands {
     public final static String ABOUT = "/about";
     public final static String RESTART = "/restart";
     public final static String NOTIFICATIONS = "/notifications";
+    public final static String POKER = "/poker";
 }

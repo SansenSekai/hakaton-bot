@@ -1,5 +1,6 @@
 package com.inovusbot.mytestbot.module.auth.service;
 
+import com.inovusbot.mytestbot.service.KeyboardService;
 import com.inovusbot.mytestbot.service.MessageSenderService;
 import com.inovusbot.mytestbot.service.UserService;
 import lombok.SneakyThrows;
@@ -68,7 +69,7 @@ public class AuthService {
     private void sendGreetingMessage(String userId) {
         String text = String.format("Привет, %s!\n\nТеперь я буду твоим личным помощником!\n\n\uD83E\uDD73\uD83E\uDD73\uD83E\uDD73", userService.getUsername(userId));
 
-        telegramBot.sendMessage(userId, text, true, );
+        telegramBot.sendMessage(userId, text, true, KeyboardService.GREETING_KEYBOARD);
     }
 
     @SneakyThrows

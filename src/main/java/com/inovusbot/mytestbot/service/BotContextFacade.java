@@ -3,7 +3,7 @@ package com.inovusbot.mytestbot.service;
 import com.inovusbot.mytestbot.module.auth.service.AuthService;
 import com.inovusbot.mytestbot.module.main.service.MainService;
 import com.inovusbot.mytestbot.module.notification.NotificationFacade;
-import com.inovusbot.mytestbot.module.notification.NotificationService;
+import com.inovusbot.mytestbot.module.poker.service.PokerFacade;
 import org.springframework.stereotype.Service;
 
 import static com.inovusbot.mytestbot.config.Commands.*;
@@ -14,12 +14,14 @@ public class BotContextFacade {
     private final AuthService authService;
     private final MainService mainService;
     private final NotificationFacade notificationFacade;
+    private final PokerFacade pokerFacade;
 
-    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade) {
+    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
         this.notificationFacade = notificationFacade;
+        this.pokerFacade = pokerFacade;
     }
 
     public void authProcess(String userId) {
@@ -48,7 +50,11 @@ public class BotContextFacade {
                     break;
                 }
                 case "/" + NOTIFICATIONS: {
-                    notificationFacade.commandHandler(userId, command);
+                    notificationFacade.showMenu(userId);
+                    break;
+                }
+                case "/" + POKER: {
+                    pokerFacade.showMenu(userId);
                     break;
                 }
                 case "/" : {

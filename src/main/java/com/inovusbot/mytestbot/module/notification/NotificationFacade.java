@@ -37,4 +37,8 @@ public class NotificationFacade {
             }
         }
     }
+
+    public void showMenu(String userId) {
+        notificationService.showMenu(userId);
+    }
 }
