@@ -18,7 +18,7 @@ public class NotificationService {
     }
 
     public void offerNotifyTime(String userId) {
-        String text = "Введи время в формате <strong>HH:mm</strong>, в которое я буду присылать тебе напоминалки, или выбери из вариантов, которые я для тебя уже заготовил.";
+        String text = "Введи время в формате <strong>HH:mm</strong>, в которое я буду присылать тебе *напоминалки*, или выбери из вариантов, которые я для тебя уже заготовил.";
 
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setResizeKeyboard(true);

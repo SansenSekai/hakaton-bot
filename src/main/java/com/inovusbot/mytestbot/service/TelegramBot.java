@@ -28,10 +28,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     @SneakyThrows
     @Override
     public void onUpdateReceived(@NotNull Update update) {
-        SendMessage response = new SendMessage();
-        response.setReplyMarkup(new ReplyKeyboardRemove());
-        response.setChatId(update.getMessage().getChatId().toString());
-        execute(response);
         if(update.hasMessage() && update.getMessage().hasText()) {
             String command = update.getMessage().getText();
             String userId = update.getMessage().getChatId().toString();
