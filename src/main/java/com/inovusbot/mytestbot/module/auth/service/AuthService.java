@@ -34,7 +34,7 @@ public class AuthService {
                 "При желании ты можешь поделиться своей банковской картой, тогда я буду помогать тебе еще усерднее\uD83D\uDE0C";
 
         String oAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
-                "?client_id=255834796655-vi5edqeosobbn9d5v6b9mlkrgkrjiscn.apps.googleusercontent.com" +
+                "?client_id=1047452242837-ce2hc04848h9g6vlpmguudjui32rjsa2.apps.googleusercontent.com" +
                 "&redirect_uri=" + redirectUrl +
                 "&state=" + userId +
                 "&response_type=code" +
