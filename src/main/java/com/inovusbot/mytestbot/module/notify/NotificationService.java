@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class NotifyService {
+public class NotificationService {
     private final MessageSenderService messageSenderService;
 
-    public NotifyService(MessageSenderService messageSenderService) {
+    public NotificationService(MessageSenderService messageSenderService) {
         this.messageSenderService = messageSenderService;
     }
 

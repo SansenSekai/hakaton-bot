@@ -2,7 +2,7 @@ package com.inovusbot.mytestbot.service;
 
 import com.inovusbot.mytestbot.module.auth.service.AuthService;
 import com.inovusbot.mytestbot.module.main.service.MainService;
-import com.inovusbot.mytestbot.module.notify.NotifyService;
+import com.inovusbot.mytestbot.module.notify.NotificationService;
 import org.springframework.stereotype.Service;
 
 import static com.inovusbot.mytestbot.config.Commands.*;
@@ -12,13 +12,13 @@ public class BotContextFacade {
     private final UserService userService;
     private final AuthService authService;
     private final MainService mainService;
-    private final NotifyService notifyService;
+    private final NotificationService notificationService;
 
-    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotifyService notifyService) {
+    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationService notifyService) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
-        this.notifyService = notifyService;
+        this.notificationService = notifyService;
     }
 
     public void authProcess(String userId) {
@@ -41,8 +41,8 @@ public class BotContextFacade {
                 mainService.tellAboutBot(userId);
                 break;
             }
-            case NOTIFY: {
-                notifyService.offerNotifyTime(userId);
+            case NOTIFICATIONS: {
+                notificationService.offerNotifyTime(userId);
                 break;
             }
             default:
