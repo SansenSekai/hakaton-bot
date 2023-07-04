@@ -32,6 +32,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             String command = update.getMessage().getText();
             String userId = update.getMessage().getChatId().toString();
             String userName = update.getMessage().getFrom().getFirstName();
+            System.out.printf("userId: %s | username: %s | text: %s %n", userId, userName, command);
             if (!userService.isUserAuthorized(userId, userName)) {
                 botContextFacade.authProcess(userId);
                 return;
