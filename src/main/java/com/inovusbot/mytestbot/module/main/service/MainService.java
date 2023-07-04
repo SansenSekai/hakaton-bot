@@ -1,6 +1,8 @@
 package com.inovusbot.mytestbot.module.main.service;
 
+import com.inovusbot.mytestbot.service.KeyboardService;
 import com.inovusbot.mytestbot.service.MessageSenderService;
+import com.inovusbot.mytestbot.service.UserService;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -15,9 +17,11 @@ import static com.inovusbot.mytestbot.config.Commands.START;
 @Service
 public class MainService {
     private final MessageSenderService messageSenderService;
+    private final UserService userService;
 
-    public MainService(MessageSenderService messageSenderService) {
+    public MainService(MessageSenderService messageSenderService, UserService userService) {
         this.messageSenderService = messageSenderService;
+        this.userService = userService;
     }
 
     public void tellAboutBot(String userId) {
@@ -90,5 +94,16 @@ public class MainService {
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
         messageSenderService.sendMessageWithKeyboardRemove(userId, text, inlineKeyboardMarkup);
+    }
+
+    public void handleErrorCommand(String userId, String command) {
+
+    }
+
+    public void gotoMainMenu(String userId) {
+        String text = "Что будем делать сейчас?\n" +
+                "Можем заняться прокрастинацией, или выбери из списка ниже.";
+        userService.setContext(userId, "/");
+        messageSenderService.sendMessage(userId, text, true, KeyboardService.MAIN_MENU_INLINE_KEYBOARD);
     }
 }

@@ -35,6 +35,22 @@ public class UserService {
         }
     }
 
+    public String getContext(String userId) {
+        UserState userState = activeUsers.get(userId);
+        if(userState == null) {
+            return "/";
+        } else {
+            return userState.getContext();
+        }
+    }
+
+    public void setContext(String userId, String context) {
+        UserState userState = activeUsers.get(userId);
+        if (userState != null) {
+            userState.setContext(context);
+        }
+    }
+
     public Integer getLastMessageId(String userId) {
         UserState userState = activeUsers.get(userId);
         if(userState == null) {
@@ -71,4 +87,6 @@ public class UserService {
         userState.setGoogleToken(token);
         userState.setAuthorized(true);
     }
+
+
 }

@@ -68,16 +68,39 @@ public class AuthService {
     private void sendGreetingMessage(String userId) {
         String text = String.format("Привет, %s!\n\nТеперь я буду твоим личным помощником!\n\n\uD83E\uDD73\uD83E\uDD73\uD83E\uDD73", userService.getUsername(userId));
 
-        InlineKeyboardButton aboutButton = new InlineKeyboardButton();
-        aboutButton.setText("Расскажи что ты умеешь");
-        aboutButton.setCallbackData(ABOUT);
+        telegramBot.sendMessage(userId, text, true, );
+    }
+
+    @SneakyThrows
+    public void sendLogout(String userId) {
+        String registrationOfferText = "Привет! \n\n" +
+                "Для использования моего функционала нам необходимо сделать шаг на встречу друг другу.\n\n" +
+                "Покажи мне свой аккаунт Google, а я буду помогать тебе чем смогу.\n\n" +
+                "При желании ты можешь поделиться своей банковской картой, тогда я буду помогать тебе еще усерднее\uD83D\uDE0C";
+
+        String oAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
+                "?client_id=1047452242837-ce2hc04848h9g6vlpmguudjui32rjsa2.apps.googleusercontent.com" +
+                "&redirect_uri=" + redirectUrl +
+                "&state=" + userId +
+                "&response_type=code" +
+                "&scope=openid%20email";
+
+        // Создание кнопки при каждом запросе, ее заранее не создать
+        InlineKeyboardButton loginButton = new InlineKeyboardButton();
+        loginButton.setText("Войти через Google");
+        loginButton.setUrl(oAuthUrl);
+
+        InlineKeyboardButton fakeLoginButton = new InlineKeyboardButton();
+        fakeLoginButton.setText("Ввести номер карты");
+        fakeLoginButton.setCallbackData("button_pressed");
 
         // Создание разметки с кнопкой
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> row = new ArrayList<>();
-        row.add(aboutButton);
+        row.add(loginButton);
+        row.add(fakeLoginButton);
         keyboardMarkup.setKeyboard(List.of(row));
-        telegramBot.sendMessage(userId, text, true, keyboardMarkup);
 
+        telegramBot.sendMessage(userId, registrationOfferText, false, keyboardMarkup);
     }
 }

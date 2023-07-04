@@ -2,7 +2,8 @@ package com.inovusbot.mytestbot.service;
 
 import com.inovusbot.mytestbot.module.auth.service.AuthService;
 import com.inovusbot.mytestbot.module.main.service.MainService;
-import com.inovusbot.mytestbot.module.notify.NotificationService;
+import com.inovusbot.mytestbot.module.notification.NotificationFacade;
+import com.inovusbot.mytestbot.module.notification.NotificationService;
 import org.springframework.stereotype.Service;
 
 import static com.inovusbot.mytestbot.config.Commands.*;
@@ -12,13 +13,13 @@ public class BotContextFacade {
     private final UserService userService;
     private final AuthService authService;
     private final MainService mainService;
-    private final NotificationService notificationService;
+    private final NotificationFacade notificationFacade;
 
-    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationService notifyService) {
+    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
-        this.notificationService = notifyService;
+        this.notificationFacade = notificationFacade;
     }
 
     public void authProcess(String userId) {
@@ -26,28 +27,63 @@ public class BotContextFacade {
     }
 
     public void handleCommand(String userId, String command) {
-        switch(command) {
-            // очистка бота, так как бд нема
-            case RESTART: {
-                userService.clear();
-                break;
+        // переход по главному меню
+        if(command.startsWith("/")) {
+            switch(command) {
+                // очистка бота, так как бд нема
+                case "/" + RESTART: {
+                    userService.clear();
+                    break;
+                }
+                case "/" + START: {
+                    mainService.gotoMainMenu(userId);
+                    break;
+                }
+                case "/" + HELP: {
+                    mainService.sendAllCommands(userId);
+                    break;
+                }
+                case "/" + ABOUT: {
+                    mainService.tellAboutBot(userId);
+                    break;
+                }
+                case "/" + NOTIFICATIONS: {
+                    notificationFacade.commandHandler(userId, command);
+                    break;
+                }
+                case "/" : {
+                    mainService.gotoMainMenu(userId);
+                }
+                default:
+                    mainService.handleErrorCommand(userId, command);
+                    break;
             }
-            case START:
-            case HELP: {
-                mainService.sendAllCommands(userId);
-                break;
+        } else { // или подменю
+            String context = userService.getContext(userId);
+            context = context.substring(0, context.indexOf("-"));
+            switch(context) {
+                // очистка бота, так как бд нема
+                case RESTART: {
+                    userService.clear();
+                    break;
+                }
+                case START:
+                case HELP: {
+                    mainService.sendAllCommands(userId);
+                    break;
+                }
+                case ABOUT: {
+                    mainService.tellAboutBot(userId);
+                    break;
+                }
+                case "notification": {
+                    notificationFacade.commandHandler(userId, command);
+                    break;
+                }
+                default:
+                    mainService.handleErrorCommand(userId, command);
+                    break;
             }
-            case ABOUT: {
-                mainService.tellAboutBot(userId);
-                break;
-            }
-            case NOTIFICATIONS: {
-                notificationService.offerNotifyTime(userId);
-                break;
-            }
-            default:
-                mainService.sendSimpleMessage(userId);
-                break;
         }
     }
 }
