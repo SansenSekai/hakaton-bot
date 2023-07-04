@@ -21,7 +21,7 @@ public class MessageSenderService {
         this.userService = userService;
     }
 
-    public void sendSimpleMessage(String userId, String text, boolean replace) {
+    public void sendMessage(String userId, String text) {
         this.sendNewMessage(userId, text, null, null);
     }
 

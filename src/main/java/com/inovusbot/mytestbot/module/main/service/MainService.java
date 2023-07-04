@@ -68,4 +68,11 @@ public class MainService {
 
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
     }
+
+    public void sendSimpleMessage(String userId) {
+        String text = "Ты молодец, продолжай в том же духе!\n\n" +
+                "Как только я пойму чего ты хочешь - я обязательно тебе сообщю.";
+
+        messageSenderService.sendMessage(userId, text);
+    }
 }

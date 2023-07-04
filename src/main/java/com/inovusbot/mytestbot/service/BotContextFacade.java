@@ -46,7 +46,7 @@ public class BotContextFacade {
                 break;
             }
             default:
-                mainService.tellAboutBot(userId);
+                mainService.sendSimpleMessage(userId);
                 break;
         }
     }
