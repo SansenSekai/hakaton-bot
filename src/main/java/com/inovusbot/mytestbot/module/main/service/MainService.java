@@ -90,7 +90,7 @@ public class MainService {
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
         messageSenderService.sendMessage(userId, text, false);
-        Thread.sleep(100L);
+        Thread.sleep(1000L);
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
     }
 }
