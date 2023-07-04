@@ -2,10 +2,13 @@ package com.inovusbot.mytestbot.service;
 
 import com.inovusbot.mytestbot.config.BotConfig;
 import jakarta.validation.constraints.NotNull;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -22,8 +25,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     public String getBotUsername() { return configuration.getBotName(); }
     @Override
     public String getBotToken() { return configuration.getBotToken(); }
+    @SneakyThrows
     @Override
     public void onUpdateReceived(@NotNull Update update) {
+        SendMessage response = new SendMessage();
+        response.setReplyMarkup(new ReplyKeyboardRemove());
+        response.setChatId(update.getMessage().getChatId().toString());
+        execute(response);
         if(update.hasMessage() && update.getMessage().hasText()) {
             String command = update.getMessage().getText();
             String userId = update.getMessage().getChatId().toString();
@@ -39,5 +47,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             botContextFacade.handleCommand(userId, command);
         }
+
+
     }
 }
