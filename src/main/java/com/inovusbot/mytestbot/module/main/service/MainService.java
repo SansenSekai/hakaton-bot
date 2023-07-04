@@ -73,6 +73,20 @@ public class MainService {
         String text = "Ты молодец, продолжай в том же духе!\n\n" +
                 "Как только я пойму чего ты хочешь - я обязательно тебе сообщю.";
 
-        messageSenderService.sendMessage(userId, text);
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+
+        InlineKeyboardButton startButton = new InlineKeyboardButton();
+        startButton.setText("Приступим!");
+        startButton.setCallbackData(START);
+
+        row.add(startButton);
+        rowsInline.add(row);
+
+        inlineKeyboardMarkup.setKeyboard(rowsInline);
+
+        messageSenderService.sendMessage(userId, text, false, inlineKeyboardMarkup);
     }
 }
