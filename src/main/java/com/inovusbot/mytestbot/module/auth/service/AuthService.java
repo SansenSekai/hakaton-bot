@@ -4,6 +4,7 @@ import com.inovusbot.mytestbot.service.MessageSenderService;
 import com.inovusbot.mytestbot.service.UserService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -15,6 +16,8 @@ import static com.inovusbot.mytestbot.config.Commands.ABOUT;
 
 @Service
 public class AuthService {
+    @Value("${oauth_redirect_url}")
+    private String redirectUrl;
     private final MessageSenderService telegramBot;
     private final UserService userService;
 
@@ -33,7 +36,7 @@ public class AuthService {
 
         String oAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
                 "?client_id=255834796655-vi5edqeosobbn9d5v6b9mlkrgkrjiscn.apps.googleusercontent.com" +
-                "&redirect_uri=http://localhost:8080/login" +
+                "&redirect_uri=" + redirectUrl +
                 "&state=" + userId +
                 "&response_type=code" +
                 "&scope=openid%20email";
