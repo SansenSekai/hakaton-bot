@@ -22,6 +22,30 @@ public class MessageSenderService {
         this.userService = userService;
     }
 
+    @SneakyThrows
+    public void sendMessageWithKeyboardRemove(String userId, String text, InlineKeyboardMarkup inlineKeyboardMarkup) {
+        SendMessage message = new SendMessage();
+        message.setChatId(userId);
+        message.setText(text);
+
+        ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+        replyKeyboardRemove.setRemoveKeyboard(true);
+        message.setReplyMarkup(replyKeyboardRemove);
+
+        Message executedMessage = telegramBot.execute(message);
+        userService.setLastMessageId(userId, executedMessage.getMessageId());
+        Thread.sleep(10000L);
+
+        System.out.println("Sleep");
+
+        EditMessageText message2 = new EditMessageText();
+        message2.setChatId(userId);
+        message2.setMessageId(userService.getLastMessageId(userId));
+        message2.setReplyMarkup(inlineKeyboardMarkup);
+
+        telegramBot.execute(message2);
+    }
+
     public void sendMessage(String userId, String text) {
         this.sendNewMessage(userId, text, null, null);
     }
