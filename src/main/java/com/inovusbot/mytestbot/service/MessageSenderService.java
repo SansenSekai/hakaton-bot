@@ -40,6 +40,7 @@ public class MessageSenderService {
 
         EditMessageText message2 = new EditMessageText();
         message2.setChatId(userId);
+        message2.setText(text);
         message2.setMessageId(userService.getLastMessageId(userId));
         message2.setReplyMarkup(inlineKeyboardMarkup);
 
