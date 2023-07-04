@@ -27,7 +27,7 @@ public class BotContextFacade {
 
     public void handleCommand(String userId, String command) {
         switch(command) {
-            // рестарт бота, так как бд нема
+            // очистка бота, так как бд нема
             case RESTART: {
                 userService.clear();
                 break;
@@ -46,6 +46,7 @@ public class BotContextFacade {
                 break;
             }
             default:
+                mainService.tellAboutBot(userId);
                 break;
         }
     }

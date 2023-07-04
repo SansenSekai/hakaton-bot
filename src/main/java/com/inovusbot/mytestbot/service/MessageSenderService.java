@@ -21,6 +21,10 @@ public class MessageSenderService {
         this.userService = userService;
     }
 
+    public void sendSimpleMessage(String userId, String text, boolean replace) {
+        this.sendNewMessage(userId, text, null, null);
+    }
+
     // Просто сообщение
     public void sendMessage(String userId, String text, boolean replace) {
         this.sendMessage(userId, text, replace, null, null);
