@@ -65,7 +65,9 @@ public class MessageSenderService {
         }
         if(inlineKeyboardMarkup == null && replyKeyboardMarkup == null) {
             // Удаляем клавиатуру
-            message.setReplyMarkup(new ReplyKeyboardRemove());
+            ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+            replyKeyboardRemove.setRemoveKeyboard(true);
+            message.setReplyMarkup(replyKeyboardRemove);
         }
         Message executedMessage = telegramBot.execute(message);
         userService.setLastMessageId(userId, executedMessage.getMessageId());
