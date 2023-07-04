@@ -21,9 +21,11 @@ public class NotificationService {
         String text = "Введи время в формате <strong>HH:mm</strong>, в которое я буду присылать тебе напоминалки, или выбери из вариантов, которые я для тебя уже заготовил.";
 
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setResizeKeyboard(true);
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
-        KeyboardRow keyboardRow = new KeyboardRow();
+        KeyboardRow keyboardRow1 = new KeyboardRow();
+        KeyboardRow keyboardRow2 = new KeyboardRow();
 
         KeyboardButton keyboardButton16 = new KeyboardButton("16:00");
         KeyboardButton keyboardButton18 = new KeyboardButton("18:00");
@@ -31,13 +33,14 @@ public class NotificationService {
         KeyboardButton keyboardButton22 = new KeyboardButton("22:00");
         KeyboardButton keyboardButtonCancel = new KeyboardButton("Отменить");
 
-        keyboardRow.add(keyboardButton16);
-        keyboardRow.add(keyboardButton18);
-        keyboardRow.add(keyboardButton20);
-        keyboardRow.add(keyboardButton22);
-        keyboardRow.add(keyboardButtonCancel);
+        keyboardRow1.add(keyboardButton16);
+        keyboardRow1.add(keyboardButton18);
+        keyboardRow1.add(keyboardButton20);
+        keyboardRow1.add(keyboardButton22);
+        keyboardRow2.add(keyboardButtonCancel);
 
-        keyboardRows.add(keyboardRow);
+        keyboardRows.add(keyboardRow1);
+        keyboardRows.add(keyboardRow2);
 
         replyKeyboardMarkup.setKeyboard(keyboardRows);
 
