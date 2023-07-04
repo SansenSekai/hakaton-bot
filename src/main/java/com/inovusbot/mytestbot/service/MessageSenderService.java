@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 
 @Service
 @Lazy
@@ -61,6 +62,10 @@ public class MessageSenderService {
         if (replyKeyboardMarkup != null) {
             // Установка разметки с кнопкой в сообщение
             message.setReplyMarkup(replyKeyboardMarkup);
+        }
+        if(inlineKeyboardMarkup == null && replyKeyboardMarkup == null) {
+            // Удаляем клавиатуру
+            message.setReplyMarkup(new ReplyKeyboardRemove());
         }
         Message executedMessage = telegramBot.execute(message);
         userService.setLastMessageId(userId, executedMessage.getMessageId());

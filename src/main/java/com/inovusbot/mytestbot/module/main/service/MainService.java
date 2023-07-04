@@ -87,6 +87,7 @@ public class MainService {
 
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
-        messageSenderService.sendMessage(userId, text, false, inlineKeyboardMarkup);
+        messageSenderService.sendMessage(userId, text, false);
+        messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
     }
 }
