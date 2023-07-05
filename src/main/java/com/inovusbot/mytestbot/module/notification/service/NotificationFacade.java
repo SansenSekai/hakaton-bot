@@ -1,4 +1,4 @@
-package com.inovusbot.mytestbot.module.notification;
+package com.inovusbot.mytestbot.module.notification.service;
 
 import com.inovusbot.mytestbot.module.main.service.MainService;
 import com.inovusbot.mytestbot.service.UserService;
@@ -17,23 +17,21 @@ public class NotificationFacade {
         this.mainService = mainService;
     }
 
-    public void commandHandler(String userId, String command) {
+    public void handleCommand(String userId, String command) {
         String context = userService.getContext(userId);
         switch (context) {
-            case "notification-menu": {
-                notificationService.goToSubMenu(userId, command);
+            case "notifications-main": {
+                if(command.equals("notifications-create")) {
+                    notificationService.createNotificationMenu(userId);
+                } else if(command.equals("notifications-delete")) {
+                    notificationService.deleteNotificationMenu(userId);
+                } else if(command.equals("notifications-pause")) {
+                    notificationService.pauseNotifications(userId);
+                }
                 break;
             }
             case "notification-choose-time": {
                 notificationService.setNotificationTime(userId, command);
-                break;
-            }
-            case "notification-turn-on": {
-                notificationService.turnOffNotification(userId);
-                break;
-            }
-            case "notification-turn-off": {
-                notificationService.turnOffNotification(userId);
                 break;
             }
             default: {

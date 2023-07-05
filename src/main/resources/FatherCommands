@@ -1,10 +1,12 @@
-login - авторизация через Google
-logout - отввязать аккаунт Google
+start - старт
+menu - главное меню
 notifications - настройка уведомлений
 jira - управление ворклогами
 calendar - Google календарь
 lunch - заказ еды
 poker - Planning Poker
+login - авторизация через Google
+logout - отвязать аккаунт Google
 help - все доступные команды
 about - о боте
 

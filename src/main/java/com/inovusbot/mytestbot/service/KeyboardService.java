@@ -1,5 +1,6 @@
 package com.inovusbot.mytestbot.service;
 
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -15,10 +16,12 @@ import java.util.Map;
 import static com.inovusbot.mytestbot.config.Commands.ABOUT;
 import static com.inovusbot.mytestbot.config.Commands.MENU;
 
+@Component
 public class KeyboardService {
 
-    public final static InlineKeyboardMarkup MAIN_MENU_INLINE_KEYBOARD = new InlineKeyboardMarkup();
-    public final static InlineKeyboardMarkup GREETING_KEYBOARD = new InlineKeyboardMarkup();
+    public static final InlineKeyboardMarkup MAIN_MENU_INLINE_KEYBOARD = new InlineKeyboardMarkup();
+    public static final InlineKeyboardMarkup GREETING_KEYBOARD = new InlineKeyboardMarkup();
+    public static final InlineKeyboardMarkup GOTO_MAIN_MENU_KEYBOARD = new InlineKeyboardMarkup();
 
     public enum KEYBOARDS {
         YES_NO,
@@ -33,10 +36,11 @@ public class KeyboardService {
 
 
     @PostConstruct
-    private void init() {
+    public void init() {
         this.initNotificationTimeKeyboard();
         this.initMainMenu();
         this.initGreetingKeyboard();
+        this.initGotoMainMenuKeyboard();
     }
 
     private void initNotificationTimeKeyboard() {
@@ -90,45 +94,61 @@ public class KeyboardService {
 
     private void initMainMenu() {
         InlineKeyboardButton notificationsButton = new InlineKeyboardButton();
-        notificationsButton.setText("Нотификации");
-        notificationsButton.setText("/notifications");
+        notificationsButton.setText("Оповещения");
+        notificationsButton.setCallbackData("/notifications");
         List<InlineKeyboardButton> notificationsRow = new ArrayList<>();
         notificationsRow.add(notificationsButton);
 
         InlineKeyboardButton calendarButton = new InlineKeyboardButton();
         calendarButton.setText("Календарь");
-        calendarButton.setText("/calendar");
+        calendarButton.setCallbackData("/calendar");
         List<InlineKeyboardButton> calendarRow = new ArrayList<>();
         calendarRow.add(calendarButton);
 
         InlineKeyboardButton lunchButton = new InlineKeyboardButton();
         lunchButton.setText("Заказ обедов");
-        lunchButton.setText("/lunch");
+        lunchButton.setCallbackData("/lunch");
         List<InlineKeyboardButton> lunchRow = new ArrayList<>();
         lunchRow.add(lunchButton);
 
         InlineKeyboardButton pokerButton = new InlineKeyboardButton();
         pokerButton.setText("Planning Poker");
-        pokerButton.setText("/poker");
+        pokerButton.setCallbackData("/poker");
         List<InlineKeyboardButton> pokerRow = new ArrayList<>();
         pokerRow.add(pokerButton);
 
-        MAIN_MENU_INLINE_KEYBOARD.setKeyboard(List.of(notificationsRow, calendarRow, lunchRow, pokerRow));
+        InlineKeyboardButton dominatingButton = new InlineKeyboardButton();
+        dominatingButton.setText("Захватить мир");
+        dominatingButton.setUrl("https://t.me/inovuschatgptbot");
+        List<InlineKeyboardButton> dominatingRow = new ArrayList<>();
+        dominatingRow.add(dominatingButton);
+
+        MAIN_MENU_INLINE_KEYBOARD.setKeyboard(List.of(notificationsRow, calendarRow, lunchRow, pokerRow, dominatingRow));
     }
 
     private void initGreetingKeyboard() {
         InlineKeyboardButton aboutButton = new InlineKeyboardButton();
         aboutButton.setText("Расскажи что ты умеешь");
-        aboutButton.setCallbackData(ABOUT);
+        aboutButton.setCallbackData("/about");
         List<InlineKeyboardButton> aboutRow = new ArrayList<>();
         aboutRow.add(aboutButton);
 
         InlineKeyboardButton mainMenuButton = new InlineKeyboardButton();
         mainMenuButton.setText("Поехали!");
-        mainMenuButton.setCallbackData(MENU);
+        mainMenuButton.setCallbackData("/menu");
         List<InlineKeyboardButton> mainMenuRow = new ArrayList<>();
-        mainMenuRow.add(aboutButton);
+        mainMenuRow.add(mainMenuButton);
 
         GREETING_KEYBOARD.setKeyboard(List.of(aboutRow, mainMenuRow));
+    }
+
+    private void initGotoMainMenuKeyboard() {
+        InlineKeyboardButton mainMenuButton = new InlineKeyboardButton();
+        mainMenuButton.setText("Главное меню");
+        mainMenuButton.setCallbackData("/menu");
+        List<InlineKeyboardButton> mainMenuRow = new ArrayList<>();
+        mainMenuRow.add(mainMenuButton);
+
+        GOTO_MAIN_MENU_KEYBOARD.setKeyboard(List.of(mainMenuRow));
     }
 }

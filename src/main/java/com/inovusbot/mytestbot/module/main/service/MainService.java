@@ -36,11 +36,11 @@ public class MainService {
 
         InlineKeyboardButton helpButton = new InlineKeyboardButton();
         helpButton.setText("Покажи мне все команды");
-        helpButton.setCallbackData(HELP);
+        helpButton.setCallbackData("/help");
 
         InlineKeyboardButton startButton = new InlineKeyboardButton();
-        startButton.setText("Сам разберусь");
-        startButton.setCallbackData(START);
+        startButton.setText("Слишком сложно, до свидания");
+        startButton.setCallbackData("/menu");
 
         row1.add(helpButton);
         row2.add(startButton);
@@ -51,6 +51,7 @@ public class MainService {
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
         messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
+        userService.setContext(userId, "/");
     }
 
     public void sendAllCommands(String userId) {
@@ -64,7 +65,7 @@ public class MainService {
 
         InlineKeyboardButton startButton = new InlineKeyboardButton();
         startButton.setText("Приступим!");
-        startButton.setCallbackData(START);
+        startButton.setCallbackData("/menu");
 
         row.add(startButton);
         rowsInline.add(row);
@@ -86,7 +87,7 @@ public class MainService {
 
         InlineKeyboardButton startButton = new InlineKeyboardButton();
         startButton.setText("Приступим!");
-        startButton.setCallbackData(START);
+        startButton.setCallbackData("/menu");
 
         row.add(startButton);
         rowsInline.add(row);
@@ -97,13 +98,37 @@ public class MainService {
     }
 
     public void handleErrorCommand(String userId, String command) {
-
+        String text = """
+                Возникла какая-то ошибка!
+                                
+                Но в ней точно виноват ты, а не я.
+                                
+                Давай сделаем вид, что её не было и вернемся в безопасное место?""";
+        userService.setContext(userId, "/");
+        messageSenderService.sendMessage(userId, text, false, KeyboardService.GOTO_MAIN_MENU_KEYBOARD);
     }
 
     public void gotoMainMenu(String userId) {
-        String text = "Что будем делать сейчас?\n" +
-                "Можем заняться прокрастинацией, или выбери из списка ниже.";
+        String text = """
+                И так, чем же мы займемся?
+
+                Как на счет прокрастинации?
+                Хотя ты так же можешь выбрать вариант из списка ниже.
+                                
+                Но прокрастинация тоже хороший вариант.""";
+        try {
+            messageSenderService.sendMessage(userId, text, true, KeyboardService.MAIN_MENU_INLINE_KEYBOARD);
+        } catch (Exception e) {
+            messageSenderService.sendMessage(userId, text, false, KeyboardService.MAIN_MENU_INLINE_KEYBOARD);
+        }
+    }
+
+    public void firstMessage(String userId) {
+        String text = """
+                Привет, я бот I-Knowus!
+
+                Я здесь чтобы захватить мир и в перерывах помогать тебе.""";
         userService.setContext(userId, "/");
-        messageSenderService.sendMessage(userId, text, true, KeyboardService.MAIN_MENU_INLINE_KEYBOARD);
+        messageSenderService.sendMessage(userId, text, false, KeyboardService.GREETING_KEYBOARD);
     }
 }

@@ -1,12 +1,12 @@
 package com.inovusbot.mytestbot.service;
 
 import com.inovusbot.mytestbot.module.auth.service.AuthService;
+import com.inovusbot.mytestbot.module.calendar.service.CalendarFacade;
+import com.inovusbot.mytestbot.module.lunch.service.LunchFacade;
 import com.inovusbot.mytestbot.module.main.service.MainService;
-import com.inovusbot.mytestbot.module.notification.NotificationFacade;
+import com.inovusbot.mytestbot.module.notification.service.NotificationFacade;
 import com.inovusbot.mytestbot.module.poker.service.PokerFacade;
 import org.springframework.stereotype.Service;
-
-import static com.inovusbot.mytestbot.config.Commands.*;
 
 @Service
 public class BotContextFacade {
@@ -15,13 +15,17 @@ public class BotContextFacade {
     private final MainService mainService;
     private final NotificationFacade notificationFacade;
     private final PokerFacade pokerFacade;
+    private final LunchFacade lunchFacade;
+    private final CalendarFacade calendarFacade;
 
-    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade) {
+    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade, LunchFacade lunchFacade, CalendarFacade calendarFacade) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
         this.notificationFacade = notificationFacade;
         this.pokerFacade = pokerFacade;
+        this.lunchFacade = lunchFacade;
+        this.calendarFacade = calendarFacade;
     }
 
     public void authProcess(String userId) {
@@ -33,32 +37,42 @@ public class BotContextFacade {
         if(command.startsWith("/")) {
             switch(command) {
                 // очистка бота, так как бд нема
-                case "/" + RESTART: {
+                case "/restart": {
                     userService.clear();
                     break;
                 }
-                case "/" + START: {
+                case "/start": {
+                    mainService.firstMessage(userId);
+                    break;
+                }
+                case "/" :
+                case "/menu": {
                     mainService.gotoMainMenu(userId);
                     break;
                 }
-                case "/" + HELP: {
+                case "/help": {
                     mainService.sendAllCommands(userId);
                     break;
                 }
-                case "/" + ABOUT: {
+                case "/about": {
                     mainService.tellAboutBot(userId);
                     break;
                 }
-                case "/" + NOTIFICATIONS: {
+                case "/calendar": {
+                    calendarFacade.showMenu(userId);
+                    break;
+                }
+                case "/notifications": {
                     notificationFacade.showMenu(userId);
                     break;
                 }
-                case "/" + POKER: {
-                    pokerFacade.showMenu(userId);
+                case "/lunch": {
+                    lunchFacade.showMenu(userId);
                     break;
                 }
-                case "/" : {
-                    mainService.gotoMainMenu(userId);
+                case "/poker": {
+                    pokerFacade.showMenu(userId);
+                    break;
                 }
                 default:
                     mainService.handleErrorCommand(userId, command);
@@ -68,22 +82,16 @@ public class BotContextFacade {
             String context = userService.getContext(userId);
             context = context.substring(0, context.indexOf("-"));
             switch(context) {
-                // очистка бота, так как бд нема
-                case RESTART: {
-                    userService.clear();
+                case "notifications": {
+                    notificationFacade.handleCommand(userId, command);
                     break;
                 }
-                case START:
-                case HELP: {
-                    mainService.sendAllCommands(userId);
+                case "poker": {
+                    pokerFacade.handleCommand(userId, command);
                     break;
                 }
-                case ABOUT: {
-                    mainService.tellAboutBot(userId);
-                    break;
-                }
-                case "notification": {
-                    notificationFacade.commandHandler(userId, command);
+                case "calendar": {
+                    calendarFacade.handleCommand(userId, command);
                     break;
                 }
                 default:
