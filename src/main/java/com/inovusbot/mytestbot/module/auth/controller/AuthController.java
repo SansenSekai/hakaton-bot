@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("notification")
+@RequestMapping("login")
 public class AuthController {
     private final AuthService authService;
 
@@ -18,7 +18,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("time")
+    @GetMapping
     public RedirectView getToken(@RequestParam(name = "code") String googleCode, @RequestParam(name = "state") String userId) {
         authService.updateUserOAuthCode(googleCode, userId);
         return new RedirectView("https://t.me/haka_2023_07_bot");

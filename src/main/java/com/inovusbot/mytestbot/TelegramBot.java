@@ -1,14 +1,14 @@
-package com.inovusbot.mytestbot.service;
+package com.inovusbot.mytestbot;
 
 import com.inovusbot.mytestbot.config.BotConfig;
+import com.inovusbot.mytestbot.service.BotContextFacade;
+import com.inovusbot.mytestbot.service.UserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {

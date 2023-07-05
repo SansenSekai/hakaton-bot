@@ -1,6 +1,6 @@
 package com.inovusbot.mytestbot.config;
 
-import com.inovusbot.mytestbot.service.TelegramBot;
+import com.inovusbot.mytestbot.TelegramBot;
 import lombok.SneakyThrows;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;

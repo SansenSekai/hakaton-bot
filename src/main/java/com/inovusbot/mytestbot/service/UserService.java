@@ -74,10 +74,10 @@ public class UserService {
             userState = new UserState();
             userState.setChatId(userId);
             userState.setUsername(userName);
-            userState.setAuthorized(true);
+            userState.setAuthorized(false);
             userState.setContext("/");
             activeUsers.put(userId, userState);
-            return true;
+            return false;
         }
         return userState.getAuthorized();
     }
