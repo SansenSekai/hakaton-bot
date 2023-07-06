@@ -19,8 +19,10 @@ public class AuthController {
     }
 
     @GetMapping
-    public RedirectView getToken(@RequestParam(name = "code") String googleCode, @RequestParam(name = "state") String userId) {
-        authService.updateUserOAuthCode(googleCode, userId);
+    public RedirectView getToken(@RequestParam(name = "code") String code, @RequestParam(name = "state") String userId) {
+        System.out.println("Code: " + code);
+        authService.updateUserOAuthCode(userId, code);
+        authService.fetchAccessToken(userId);
         return new RedirectView("https://t.me/haka_2023_07_bot");
     }
 }

@@ -1,7 +1,7 @@
 package com.inovusbot.mytestbot;
 
 import com.inovusbot.mytestbot.config.BotConfig;
-import com.inovusbot.mytestbot.service.BotContextFacade;
+import com.inovusbot.mytestbot.service.BotFacade;
 import com.inovusbot.mytestbot.service.UserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.SneakyThrows;
@@ -14,11 +14,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class TelegramBot extends TelegramLongPollingBot {
     private final BotConfig configuration;
     private final UserService userService;
-    private final BotContextFacade botContextFacade;
+    private final BotFacade botFacade;
 
-    public TelegramBot(BotConfig config, UserService userService, @Lazy BotContextFacade botContextFacade) {
+    public TelegramBot(BotConfig config, UserService userService, @Lazy BotFacade botContextFacade) {
         this.configuration = config;
-        this.botContextFacade = botContextFacade;
+        this.botFacade = botContextFacade;
         this.userService = userService;
     }
     @Override
@@ -34,15 +34,15 @@ public class TelegramBot extends TelegramLongPollingBot {
             String userName = update.getMessage().getFrom().getFirstName();
             System.out.printf("userId: %s | username: %s | text: %s %n", userId, userName, command);
             if (!userService.isUserAuthorized(userId, userName)) {
-                botContextFacade.authProcess(userId);
+                botFacade.authProcess(userId);
                 return;
             }
-            botContextFacade.handleCommand(userId, command);
+            botFacade.handleCommand(userId, command);
         } else if (update.hasCallbackQuery()) {
             String command = update.getCallbackQuery().getData();
             String userId = update.getCallbackQuery().getFrom().getId().toString();
 
-            botContextFacade.handleCommand(userId, command);
+            botFacade.handleCommand(userId, command);
         }
 
 

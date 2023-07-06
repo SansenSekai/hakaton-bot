@@ -12,5 +12,6 @@ public class UserState {
     private String context;
     private Integer lastMessageId;
 
-    private String googleToken;
+    private String code;
+    private String googleAccessToken;
 }

@@ -9,7 +9,7 @@ import com.inovusbot.mytestbot.module.poker.service.PokerFacade;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BotContextFacade {
+public class BotFacade {
     private final UserService userService;
     private final AuthService authService;
     private final MainService mainService;
@@ -18,7 +18,7 @@ public class BotContextFacade {
     private final LunchFacade lunchFacade;
     private final CalendarFacade calendarFacade;
 
-    public BotContextFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade, LunchFacade lunchFacade, CalendarFacade calendarFacade) {
+    public BotFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade, LunchFacade lunchFacade, CalendarFacade calendarFacade) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
@@ -66,6 +66,10 @@ public class BotContextFacade {
                     notificationFacade.showMenu(userId);
                     break;
                 }
+                case "/jira": {
+                    mainService.sendAllCommands(userId);
+                    break;
+                }
                 case "/lunch": {
                     lunchFacade.showMenu(userId);
                     break;
@@ -92,6 +96,9 @@ public class BotContextFacade {
                 }
                 case "calendar": {
                     calendarFacade.handleCommand(userId, command);
+                    break;
+                }case "lunch": {
+                    lunchFacade.handleCommand(userId, command);
                     break;
                 }
                 default:

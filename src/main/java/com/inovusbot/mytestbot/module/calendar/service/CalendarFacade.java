@@ -22,7 +22,7 @@ public class CalendarFacade {
         switch (context) {
             case "calendar-main": {
                 if(command.equals("calendar-coworking")) {
-                    calendarService.selectCoworking(userId);
+                    calendarService.selectDay(userId);
                 }
                 break;
             }

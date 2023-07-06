@@ -21,15 +21,6 @@ public class NotificationService {
         this.userService = userService;
     }
 
-    public void mainMenu(String userId) {
-        String text = "Выбери какие напоминания ты хотел бы получать";
-
-
-        InlineKeyboardMarkup inlineKeyboardMarkup = KeyboardService.inlineKeyboardMarkupMap.get(KeyboardService.KEYBOARDS.NOTIFICATION_MENU);
-
-        messageSenderService.sendMessage(userId, text, true, inlineKeyboardMarkup);
-    }
-
     public void offerNotifyTime(String userId) {
         String text = "Введи время в формате <strong>HH:mm</strong>, в которое я буду присылать тебе *напоминалки*, или выбери из вариантов, которые я для тебя уже заготовил.";
 

@@ -29,8 +29,6 @@ public class KeyboardService {
 
         NOTIFICATION_MENU;
     }
-
-    public final static Map<KEYBOARDS, InlineKeyboardMarkup> inlineKeyboardMarkupMap = new HashMap<>();
     public final static Map<KEYBOARDS, ReplyKeyboardMarkup> replyKeyboardMarkupHashMap = new HashMap<>();
 
 
@@ -72,26 +70,6 @@ public class KeyboardService {
         replyKeyboardMarkupHashMap.put(KEYBOARDS.YES_NO, replyKeyboardMarkup);
     }
 
-    private void initNotificationMainMenuKeyboard() {
-
-        InlineKeyboardButton switchJiraButton = new InlineKeyboardButton();
-        switchJiraButton.setText("Включить напоминания для Jira");
-        switchJiraButton.setText("switch_jira_notify");
-
-        InlineKeyboardButton switchLunchButton = new InlineKeyboardButton();
-        switchLunchButton.setText("Включить напоминания для заказа обедов");
-        switchLunchButton.setText("switch_lunch_notify");
-
-        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-        List<InlineKeyboardButton> row1 = new ArrayList<>();
-        row1.add(switchJiraButton);
-        List<InlineKeyboardButton> row2 = new ArrayList<>();
-        row2.add(switchLunchButton);
-        keyboardMarkup.setKeyboard(List.of(row1, row2));
-
-        inlineKeyboardMarkupMap.put(KEYBOARDS.NOTIFICATION_MENU, keyboardMarkup);
-    }
-
     private void initMainMenu() {
         InlineKeyboardButton notificationsButton = new InlineKeyboardButton();
         notificationsButton.setText("Оповещения");
@@ -104,6 +82,12 @@ public class KeyboardService {
         calendarButton.setCallbackData("/calendar");
         List<InlineKeyboardButton> calendarRow = new ArrayList<>();
         calendarRow.add(calendarButton);
+
+        InlineKeyboardButton jiraButton = new InlineKeyboardButton();
+        jiraButton.setText("Jira");
+        jiraButton.setCallbackData("/jira");
+        List<InlineKeyboardButton> jiraRow = new ArrayList<>();
+        jiraRow.add(jiraButton);
 
         InlineKeyboardButton lunchButton = new InlineKeyboardButton();
         lunchButton.setText("Заказ обедов");
@@ -123,7 +107,7 @@ public class KeyboardService {
         List<InlineKeyboardButton> dominatingRow = new ArrayList<>();
         dominatingRow.add(dominatingButton);
 
-        MAIN_MENU_INLINE_KEYBOARD.setKeyboard(List.of(notificationsRow, calendarRow, lunchRow, pokerRow, dominatingRow));
+        MAIN_MENU_INLINE_KEYBOARD.setKeyboard(List.of(notificationsRow, calendarRow, jiraRow, lunchRow, pokerRow, dominatingRow));
     }
 
     private void initGreetingKeyboard() {

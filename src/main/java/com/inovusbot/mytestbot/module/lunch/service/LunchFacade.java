@@ -17,4 +17,23 @@ public class LunchFacade {
         lunchService.showMenu(userId);
     }
 
+    public void handleCommand(String userId, String command) {
+        String context = userService.getContext(userId);
+        switch (context) {
+            case "lunch-main": {
+                String[] parts = command.split("-");
+                String day = parts[2];
+                lunchService.showMenuMenu(userId, day);
+                break;
+            }
+            case "lunch-menu": {
+                System.out.println("do nothing");
+                break;
+            }
+            default: {
+
+            }
+        }
+    }
+
 }

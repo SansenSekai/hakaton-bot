@@ -44,6 +44,15 @@ public class UserService {
         }
     }
 
+    public String getCode(String userId) {
+        UserState userState = activeUsers.get(userId);
+        if(userState == null) {
+            return "";
+        } else {
+            return userState.getCode();
+        }
+    }
+
     public void setContext(String userId, String context) {
         UserState userState = activeUsers.get(userId);
         if (userState != null) {
@@ -82,9 +91,9 @@ public class UserService {
         return userState.getAuthorized();
     }
 
-    public void setGoogleToken(String userId, String token) {
+    public void setCode(String userId, String code) {
         UserState userState = activeUsers.get(userId);
-        userState.setGoogleToken(token);
+        userState.setCode(code);
         userState.setAuthorized(true);
     }
 
