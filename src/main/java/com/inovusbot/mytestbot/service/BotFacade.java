@@ -2,6 +2,7 @@ package com.inovusbot.mytestbot.service;
 
 import com.inovusbot.mytestbot.module.auth.service.AuthService;
 import com.inovusbot.mytestbot.module.calendar.service.CalendarFacade;
+import com.inovusbot.mytestbot.module.jira.service.JiraFacade;
 import com.inovusbot.mytestbot.module.lunch.service.LunchFacade;
 import com.inovusbot.mytestbot.module.main.service.MainService;
 import com.inovusbot.mytestbot.module.notification.service.NotificationFacade;
@@ -17,8 +18,9 @@ public class BotFacade {
     private final PokerFacade pokerFacade;
     private final LunchFacade lunchFacade;
     private final CalendarFacade calendarFacade;
+    private final JiraFacade jiraFacade;
 
-    public BotFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade, LunchFacade lunchFacade, CalendarFacade calendarFacade) {
+    public BotFacade(UserService userService, AuthService authService, MainService mainService, NotificationFacade notificationFacade, PokerFacade pokerFacade, LunchFacade lunchFacade, CalendarFacade calendarFacade, JiraFacade jiraFacade) {
         this.userService = userService;
         this.authService = authService;
         this.mainService = mainService;
@@ -26,6 +28,7 @@ public class BotFacade {
         this.pokerFacade = pokerFacade;
         this.lunchFacade = lunchFacade;
         this.calendarFacade = calendarFacade;
+        this.jiraFacade = jiraFacade;
     }
 
     public void authProcess(String userId) {
@@ -34,8 +37,8 @@ public class BotFacade {
 
     public void handleCommand(String userId, String command) {
         // переход по главному меню
-        if(command.startsWith("/")) {
-            switch(command) {
+        if (command.startsWith("/")) {
+            switch (command) {
                 // очистка бота, так как бд нема
                 case "/restart": {
                     userService.clear();
@@ -45,7 +48,7 @@ public class BotFacade {
                     mainService.firstMessage(userId);
                     break;
                 }
-                case "/" :
+                case "/":
                 case "/menu": {
                     mainService.gotoMainMenu(userId);
                     break;
@@ -67,7 +70,7 @@ public class BotFacade {
                     break;
                 }
                 case "/jira": {
-                    mainService.sendAllCommands(userId);
+                    jiraFacade.showMenu(userId);
                     break;
                 }
                 case "/lunch": {
@@ -82,10 +85,26 @@ public class BotFacade {
                     mainService.handleErrorCommand(userId, command);
                     break;
             }
+        } else if (command.startsWith("push")) {
+            String[] parts = command.split("-");
+            String service = parts[1];
+            switch(service) {
+                case "jira": {
+                    jiraFacade.handlePush(userId, command);
+                    break;
+                }
+                case "lunch": {
+                    lunchFacade.handlePush(userId, command);
+                    break;
+                }
+                default:
+                    mainService.handleErrorCommand(userId, command);
+                    break;
+            }
         } else { // или подменю
             String context = userService.getContext(userId);
             context = context.substring(0, context.indexOf("-"));
-            switch(context) {
+            switch (context) {
                 case "notifications": {
                     notificationFacade.handleCommand(userId, command);
                     break;
@@ -97,7 +116,12 @@ public class BotFacade {
                 case "calendar": {
                     calendarFacade.handleCommand(userId, command);
                     break;
-                }case "lunch": {
+                }
+                case "jira": {
+                    jiraFacade.handleCommand(userId, command);
+                    break;
+                }
+                case "lunch": {
                     lunchFacade.handleCommand(userId, command);
                     break;
                 }

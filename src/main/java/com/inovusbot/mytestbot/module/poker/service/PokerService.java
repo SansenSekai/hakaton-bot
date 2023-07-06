@@ -46,7 +46,7 @@ public class PokerService {
         room2Row.add(room2Button);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/menu");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -64,7 +64,7 @@ public class PokerService {
                 """;
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/poker");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -84,7 +84,7 @@ public class PokerService {
         text = String.format(text, roomNumber);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/poker");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);

@@ -1,5 +1,6 @@
 package com.inovusbot.mytestbot.module.lunch.service;
 
+import com.inovusbot.mytestbot.module.main.service.MainService;
 import com.inovusbot.mytestbot.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -7,10 +8,12 @@ import org.springframework.stereotype.Service;
 public class LunchFacade {
     private final UserService userService;
     private final LunchService lunchService;
+    private final MainService mainService;
 
-    public LunchFacade(UserService userService, LunchService lunchService) {
+    public LunchFacade(UserService userService, LunchService lunchService, MainService mainService) {
         this.userService = userService;
         this.lunchService = lunchService;
+        this.mainService = mainService;
     }
 
     public void showMenu(String userId) {
@@ -31,9 +34,12 @@ public class LunchFacade {
                 break;
             }
             default: {
-
+                mainService.handleErrorCommand(userId, command);
             }
         }
     }
 
+    public void handlePush(String userId, String command) {
+        lunchService.showMenuMenu(userId, "1");
+    }
 }

@@ -32,7 +32,7 @@ public class CalendarService {
         createRoomRow.add(createRoomButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/menu");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -51,7 +51,7 @@ public class CalendarService {
                 Однако, здесь слишком темно и вы не можете его найти.""";
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/calendar");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -84,7 +84,7 @@ public class CalendarService {
         tomorrowRow.add(tomorrowButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("calendar-coworking");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);

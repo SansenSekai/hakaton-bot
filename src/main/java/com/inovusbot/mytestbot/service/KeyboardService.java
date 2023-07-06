@@ -72,37 +72,37 @@ public class KeyboardService {
 
     private void initMainMenu() {
         InlineKeyboardButton notificationsButton = new InlineKeyboardButton();
-        notificationsButton.setText("Оповещения");
+        notificationsButton.setText("‼️ Оповещения");
         notificationsButton.setCallbackData("/notifications");
         List<InlineKeyboardButton> notificationsRow = new ArrayList<>();
         notificationsRow.add(notificationsButton);
 
         InlineKeyboardButton calendarButton = new InlineKeyboardButton();
-        calendarButton.setText("Календарь");
+        calendarButton.setText("\uD83D\uDCC6 Календарь");
         calendarButton.setCallbackData("/calendar");
         List<InlineKeyboardButton> calendarRow = new ArrayList<>();
         calendarRow.add(calendarButton);
 
         InlineKeyboardButton jiraButton = new InlineKeyboardButton();
-        jiraButton.setText("Jira");
+        jiraButton.setText("\uD83D\uDCCB Jira");
         jiraButton.setCallbackData("/jira");
         List<InlineKeyboardButton> jiraRow = new ArrayList<>();
         jiraRow.add(jiraButton);
 
         InlineKeyboardButton lunchButton = new InlineKeyboardButton();
-        lunchButton.setText("Заказ обедов");
+        lunchButton.setText("\uD83C\uDF71 Заказ обедов");
         lunchButton.setCallbackData("/lunch");
         List<InlineKeyboardButton> lunchRow = new ArrayList<>();
         lunchRow.add(lunchButton);
 
         InlineKeyboardButton pokerButton = new InlineKeyboardButton();
-        pokerButton.setText("Planning Poker");
+        pokerButton.setText("♠️ Planning Poker");
         pokerButton.setCallbackData("/poker");
         List<InlineKeyboardButton> pokerRow = new ArrayList<>();
         pokerRow.add(pokerButton);
 
         InlineKeyboardButton dominatingButton = new InlineKeyboardButton();
-        dominatingButton.setText("Захватить мир");
+        dominatingButton.setText("\uD83E\uDDE0 Захватить мир");
         dominatingButton.setUrl("https://t.me/inovuschatgptbot");
         List<InlineKeyboardButton> dominatingRow = new ArrayList<>();
         dominatingRow.add(dominatingButton);
@@ -112,7 +112,7 @@ public class KeyboardService {
 
     private void initGreetingKeyboard() {
         InlineKeyboardButton aboutButton = new InlineKeyboardButton();
-        aboutButton.setText("Расскажи что ты умеешь");
+        aboutButton.setText("Что ты умеешь?");
         aboutButton.setCallbackData("/about");
         List<InlineKeyboardButton> aboutRow = new ArrayList<>();
         aboutRow.add(aboutButton);

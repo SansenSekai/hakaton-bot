@@ -94,7 +94,7 @@ public class LunchService {
         day2Row.add(day2Button);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/menu");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -108,7 +108,7 @@ public class LunchService {
 
     public void showMenuMenu(String userId, String day) {
         String text = """
-                Выбирай блюдо.
+                Выбирай что сегодня у тебя будет на обед.
                 """;
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -146,7 +146,7 @@ public class LunchService {
         buyRow.add(buyButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/lunch");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);

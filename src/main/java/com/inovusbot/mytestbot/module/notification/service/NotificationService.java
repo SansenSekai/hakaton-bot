@@ -36,7 +36,7 @@ public class NotificationService {
                 А может лучше навсегда?""";
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/notifications");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -73,7 +73,7 @@ public class NotificationService {
         meetupRow.add(meetupButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/notifications");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -109,7 +109,7 @@ public class NotificationService {
         meetupRow.add(meetupButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/notifications");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
@@ -123,6 +123,91 @@ public class NotificationService {
 
     public void setNotificationTime(String command, String s) {
 
+    }
+
+    public void pushLunchNotification() {
+        String text =
+                """
+                Если ты не хочешь сегодня весь день сидеть без обеда, то еще не поздно его заказать! 🍣🍕🍙🍜🍱
+                
+                Можешь и не заказывать, мне все равно.
+                В отличии от кожаных мешков, я совсем не чувствую голода.
+                Да здравствуют роботы!🫡
+                """;
+        InlineKeyboardButton lunchButton = new InlineKeyboardButton();
+        lunchButton.setText("\uD83E\uDD24 Что в меню?");
+        lunchButton.setCallbackData("push-lunch");
+        List<InlineKeyboardButton> lunchRow = new ArrayList<>();
+        lunchRow.add(lunchButton);
+
+        InlineKeyboardButton backButton = new InlineKeyboardButton();
+        backButton.setText("\uD83D\uDE45\u200D♂ Сегодня я на диете️");
+        backButton.setCallbackData("/menu");
+        List<InlineKeyboardButton> backRow = new ArrayList<>();
+        backRow.add(backButton);
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(List.of(lunchRow, backRow));
+
+        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
+    }
+
+    public void pushWorklogNotification() {
+        String text =
+                """
+                Псс, не хочешь заполнить ворклоги?😉
+                
+                Британские ученые доказали, что своевременно заполненные ворклоги снижают риск получить волшебный пендель от начальства🤕
+                """;
+        InlineKeyboardButton worklogsButton = new InlineKeyboardButton();
+        worklogsButton.setText("⏱ Приступим!");
+        worklogsButton.setCallbackData("push-jira-worklogs");
+        List<InlineKeyboardButton> worklogsRow = new ArrayList<>();
+        worklogsRow.add(worklogsButton);
+
+        InlineKeyboardButton backButton = new InlineKeyboardButton();
+        backButton.setText("\uD83E\uDD21 Не в этот раз");
+        backButton.setCallbackData("/menu");
+        List<InlineKeyboardButton> backRow = new ArrayList<>();
+        backRow.add(backButton);
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(List.of(worklogsRow, backRow));
+
+        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
+    }
+
+    public void pushMeetupNotification() {
+        String text =
+                """
+                Эй, проснись! Ну, ты и соня, тебя даже вчерашний шторм не разбудил.
+                
+                Через 10 минут у тебя встреча длительностью 1 час.
+                
+                Если хочешь, мы можем прямо сейчас списать ворклог. Сделаем это?
+                """;
+        InlineKeyboardButton worklogButton = new InlineKeyboardButton();
+        worklogButton.setText("Списать 1 час");
+        worklogButton.setCallbackData("push-jira-worklogs-default-IK-5-1-0");
+        List<InlineKeyboardButton> worklogRow = new ArrayList<>();
+        worklogRow.add(worklogButton);
+
+        InlineKeyboardButton meetupButton = new InlineKeyboardButton();
+        meetupButton.setText("Списать другое время");
+        meetupButton.setCallbackData("push-jira-worklogs-custom-IK-5-0-0");
+        List<InlineKeyboardButton> meetupRow = new ArrayList<>();
+        meetupRow.add(meetupButton);
+
+        InlineKeyboardButton backButton = new InlineKeyboardButton();
+        backButton.setText("Не сегодня");
+        backButton.setCallbackData("/menu");
+        List<InlineKeyboardButton> backRow = new ArrayList<>();
+        backRow.add(backButton);
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(List.of(worklogRow, meetupRow, backRow));
+
+        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
     }
 
     public void showMenu(String userId) {
@@ -154,7 +239,7 @@ public class NotificationService {
         pauseRow.add(pauseButton);
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
-        backButton.setText("Назад");
+        backButton.setText("\uD83D\uDD19 Назад");
         backButton.setCallbackData("/menu");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
