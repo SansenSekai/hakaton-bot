@@ -125,7 +125,7 @@ public class NotificationService {
 
     }
 
-    public void pushLunchNotification() {
+    public void pushLunchNotification(String userId) {
         String text =
                 """
                 Если ты не хочешь сегодня весь день сидеть без обеда, то еще не поздно его заказать! 🍣🍕🍙🍜🍱
@@ -149,10 +149,10 @@ public class NotificationService {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(List.of(lunchRow, backRow));
 
-        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
+        messageSenderService.sendMessage(userId, text, false, inlineKeyboardMarkup);
     }
 
-    public void pushWorklogNotification() {
+    public void pushWorklogNotification(String userId) {
         String text =
                 """
                 Псс, не хочешь заполнить ворклоги?😉
@@ -174,10 +174,10 @@ public class NotificationService {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(List.of(worklogsRow, backRow));
 
-        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
+        messageSenderService.sendMessage(userId, text, false, inlineKeyboardMarkup);
     }
 
-    public void pushMeetupNotification() {
+    public void pushMeetupNotification(String userId) {
         String text =
                 """
                 Эй, проснись! Ну, ты и соня, тебя даже вчерашний шторм не разбудил.
@@ -207,7 +207,7 @@ public class NotificationService {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(List.of(worklogRow, meetupRow, backRow));
 
-        messageSenderService.sendMessage("776942821", text, false, inlineKeyboardMarkup);
+        messageSenderService.sendMessage(userId, text, false, inlineKeyboardMarkup);
     }
 
     public void showMenu(String userId) {
