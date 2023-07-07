@@ -8,7 +8,6 @@ import com.inovusbot.mytestbot.module.jira.model.IssueWorklog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;

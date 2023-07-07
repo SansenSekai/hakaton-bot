@@ -11,9 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inovusbot.mytestbot.config.Commands.HELP;
-import static com.inovusbot.mytestbot.config.Commands.START;
-
 @Service
 public class MainService {
     private final MessageSenderService messageSenderService;
