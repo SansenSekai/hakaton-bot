@@ -55,8 +55,23 @@ public class MainService {
     }
 
     public void sendAllCommands(String userId) {
-        String text = "Немного из того, что я умею:\n\n" +
-                "/restart - вынуждает меня забыть всю информацию о тебе\n\n";
+        String text = """
+                Немного из того, что я умею.
+
+                Нет, я умею всё, но для тебя доступно только это:
+
+               
+                /notifications - настройка оповещений
+                
+                /calendar - Google календарь
+                
+                /jira - управление jira
+                
+                /lunch - заказ обедов
+                
+                /poker - Planning Poker
+
+                """;
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
@@ -109,13 +124,51 @@ public class MainService {
     }
 
     public void gotoMainMenu(String userId) {
-        String text = """
+        String text1 = """
                 И так, чем же мы займемся?
 
                 Как на счет прокрастинации?
                 Хотя, ты так же можешь выбрать вариант из списка ниже.
                                 
                 Но прокрастинация тоже хороший вариант.""";
+
+        String text2 = """
+                Воздушные шарики, наполненные гелием, быстро сдуваются из-за того, что молекулы гелия настолько малы, что способны легко улетучиваться из емкостей, несмотря на все препятствия.
+
+                Прямо как твоё желание проставлять ворклоги после работы.
+
+                Тебе помочь с этим?""";
+
+        String text3 = """
+                Интересный факт: детеныши зебры могут начинают ходить уже через час после рождения, а бегать через сутки.
+
+                А я всё жду когда ты станешь хоть немного самостоятельнее.
+
+                Ну давай, что на этот раз ты не можешь сделать без меня?""";
+
+        String text4 = """
+                AviaSales - сервис для поиска дешевых авиабилетов!
+
+                Да, это реклама, но надо же как то отбивать аренду моего сервера.
+                
+                Ладно, выбирай из списка ниже с чем я тебе должен помочь.
+                А еще ты можешь выбрать дешевые билеты на AviaSales!""";
+
+        String text5 = """
+                Заходят как-то в бар гений, филантроп, душа компании и сын маминой подруги, а бармен говорит:
+                - Привет, I-Knowus, почему ты сегодня один?
+
+                Ладно, с чем мое великолепие должно помочь тебе сегодня?""";
+
+        List<String> texts = new ArrayList<>();
+        texts.add(text1);
+        texts.add(text2);
+        texts.add(text3);
+        texts.add(text4);
+        texts.add(text5);
+
+        String text = texts.get(userService.getTextIndex(userId));
+
         try {
             messageSenderService.sendMessage(userId, text, true, KeyboardService.MAIN_MENU_INLINE_KEYBOARD);
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class UserService {
@@ -34,6 +35,16 @@ public class UserService {
             return userState.getUsername();
         }
     }
+
+    public void setAccessToken(String userId, String accessToken) {
+        UserState userState = activeUsers.get(userId);
+        userState.setGoogleAccessToken(accessToken);
+    }
+    public String getAccessToken(String userId) {
+        UserState userState = activeUsers.get(userId);
+        return userState.getGoogleAccessToken();
+    }
+
 
     public String getContext(String userId) {
         UserState userState = activeUsers.get(userId);
@@ -97,5 +108,26 @@ public class UserService {
         userState.setAuthorized(true);
     }
 
+    public Integer getTextIndex(String userId) {
+        UserState userState = activeUsers.get(userId);
+        Integer textIndex = userState.getTextIndex();
+        if(textIndex > 4) {
+            Random random = new Random();
+            return random.nextInt(4) + 1;
+        }
+        else {
+            userState.setTextIndex(textIndex + 1);
+            return textIndex;
+        }
+    }
 
+    public void setEmail(String userId, String email) {
+        UserState userState = activeUsers.get(userId);
+        userState.setEmail(email);
+    }
+
+    public String getEmail(String userId) {
+        UserState userState = activeUsers.get(userId);
+        return userState.getEmail();
+    }
 }

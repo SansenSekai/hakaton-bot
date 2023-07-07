@@ -114,7 +114,7 @@ public class LunchService {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
 
-        MenuDTO menuDTO = lunches.get(Integer.parseInt(day));
+        MenuDTO menuDTO = lunches.get(Integer.parseInt(day) - 1);
 
         menuDTO.getMenuItems().forEach(menuItem -> {
             InlineKeyboardButton menuButton = new InlineKeyboardButton();

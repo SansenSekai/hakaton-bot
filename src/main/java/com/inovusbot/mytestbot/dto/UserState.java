@@ -12,6 +12,10 @@ public class UserState {
     private String context;
     private Integer lastMessageId;
 
+    private String email;
+
     private String code;
     private String googleAccessToken;
+
+    private Integer textIndex = 0;
 }

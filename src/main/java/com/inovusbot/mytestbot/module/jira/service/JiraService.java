@@ -225,7 +225,7 @@ public class JiraService {
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
         backButton.setText("\uD83D\uDD19 Назад");
-        backButton.setCallbackData("jira-main");
+        backButton.setCallbackData("/jira");
         List<InlineKeyboardButton> backRow = new ArrayList<>();
         backRow.add(backButton);
 

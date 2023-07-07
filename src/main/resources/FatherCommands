@@ -1,9 +1,9 @@
 start - старт
 menu - главное меню
-notifications - настройка уведомлений
-jira - управление ворклогами
+notifications - настройка оповещений
 calendar - Google календарь
-lunch - заказ еды
+jira - управление jira
+lunch - заказ обедов
 poker - Planning Poker
 login - авторизация через Google
 logout - отвязать аккаунт Google

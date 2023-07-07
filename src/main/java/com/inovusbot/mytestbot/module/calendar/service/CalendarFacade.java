@@ -22,7 +22,25 @@ public class CalendarFacade {
         switch (context) {
             case "calendar-main": {
                 if(command.equals("calendar-coworking")) {
+                    //calendarService.selectDay(userId);
                     calendarService.selectDay(userId);
+                } else if(command.equals("calendar-today-events")) {
+                    calendarService.fetchMyEvents(userId);
+                }
+                break;
+            }
+            case "calendar-coworking-day": {
+                if(command.equals("calendar-tomorrow")) {
+                    calendarService.selectWorkspace(userId);
+                }
+                break;
+            }
+            case "calendar-coworking-room": {
+                String[] parts = command.split("-");
+                String commandString = parts[1] + "-" + parts[2];
+                Integer room = Integer.valueOf(parts[3]);
+                if(commandString.equals("tomorrow-room")) {
+                    calendarService.createCoworking(userId, room);
                 }
                 break;
             }

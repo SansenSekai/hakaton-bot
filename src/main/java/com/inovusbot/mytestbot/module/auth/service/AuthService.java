@@ -4,6 +4,12 @@ import com.inovusbot.mytestbot.service.KeyboardService;
 import com.inovusbot.mytestbot.service.MessageSenderService;
 import com.inovusbot.mytestbot.service.UserService;
 import lombok.SneakyThrows;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +107,7 @@ public class AuthService {
         String registrationOfferText = "Привет! \n\n" +
                 "Для использования моего функционала нам необходимо сделать шаг на встречу друг другу.\n\n" +
                 "Покажи мне свой аккаунт Google, а я буду помогать тебе чем смогу.\n\n" +
-                "При желании ты можешь поделиться своей банковской картой, тогда я буду помогать тебе еще усерднее\uD83D\uDE0C";
+                "При желании ты можешь сфоторграфировать свою банковскую карту с двух сторон и скинуть их мне, тогда я буду помогать тебе еще усерднее\uD83D\uDE0C";
 
         String oAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
                 "?client_id=321949287171-uv02pounlkru8f68lb653cudqogq3acv.apps.googleusercontent.com" +
@@ -124,7 +130,7 @@ public class AuthService {
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> row = new ArrayList<>();
         row.add(loginButton);
-        row.add(fakeLoginButton);
+        // row.add(fakeLoginButton);
         keyboardMarkup.setKeyboard(List.of(row));
 
         telegramBot.sendMessage(userId, registrationOfferText, false, keyboardMarkup);
@@ -183,10 +189,44 @@ public class AuthService {
                 // Получение значения поля "name"
                 String token = (String) jsonObject.get("access_token");
 
+                userService.setAccessToken(userId, token);
+
                 System.out.println("Access token: " + token);
             }
 
             connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SneakyThrows
+    public void fetchUserInfo(String userId) {
+        String url = "https://www.googleapis.com/oauth2/v2/userinfo";
+        String accessToken = userService.getAccessToken(userId);
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(url);
+            request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                // Обрабатываем ответ
+                int statusCode = response.getStatusLine().getStatusCode();
+                System.out.println("Код состояния: " + statusCode);
+                String responseBody = EntityUtils.toString(response.getEntity());
+
+
+                JSONParser parser = new JSONParser();
+                // Преобразование JSON-строки в объект JSONObject
+                JSONObject jsonObject = (JSONObject) parser.parse(responseBody);
+
+                // Получение значения поля "name"
+                String email = (String) jsonObject.get("email");
+
+                userService.setEmail(userId, email);
+
+                System.out.println("Email: " + email);
+                // ... дополнительный код для обработки ответа
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

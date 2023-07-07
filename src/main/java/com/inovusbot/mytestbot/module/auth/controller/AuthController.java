@@ -23,6 +23,7 @@ public class AuthController {
         System.out.println("Code: " + code);
         authService.updateUserOAuthCode(userId, code);
         authService.fetchAccessToken(userId);
+        authService.fetchUserInfo(userId);
         return new RedirectView("https://t.me/haka_2023_07_bot");
     }
 }

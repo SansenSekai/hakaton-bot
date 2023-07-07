@@ -41,6 +41,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         } else if (update.hasCallbackQuery()) {
             String command = update.getCallbackQuery().getData();
             String userId = update.getCallbackQuery().getFrom().getId().toString();
+            String userName = update.getCallbackQuery().getFrom().getFirstName();
+
+            if (!userService.isUserAuthorized(userId, userName)) {
+                botFacade.authProcess(userId);
+                return;
+            }
 
             botFacade.handleCommand(userId, command);
         }
