@@ -130,4 +130,8 @@ public class UserService {
         UserState userState = activeUsers.get(userId);
         return userState.getEmail();
     }
+
+    public void logout(String userId) {
+        activeUsers.remove(userId);
+    }
 }

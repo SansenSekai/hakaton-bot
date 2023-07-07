@@ -81,6 +81,10 @@ public class BotFacade {
                     pokerFacade.showMenu(userId);
                     break;
                 }
+                case "/logout": {
+                    userService.logout(userId);
+                    break;
+                }
                 default:
                     mainService.handleErrorCommand(userId, command);
                     break;
