@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
 @Service
 public class AuthService {
     // @Value("${oauth_redirect_url}")
-    //private String redirectUrl = "https://i-knowuss-santoryu1001.amvera.io/login";
-    private String redirectUrl = "http://localhost:8080/login";
+    private String redirectUrl = "https://i-knowus-santoryu1001.amvera.io/login";
+    // private String redirectUrl = "http://localhost:8080/login";
     private final MessageSenderService telegramBot;
     private final UserService userService;
 
@@ -40,67 +40,6 @@ public class AuthService {
         this.userService = userService;
     }
 
-    String code = "4/0AZEOvhXdv2oN8WL1Y8cHlCUjMVCZdWExIKWz3qi_y7ckYz7ywAyKefuD2J3RuIhlzwFjrA";
-    String clientId = "1047452242837-ce2hc04848h9g6vlpmguudjui32rjsa2.apps.googleusercontent.com";
-    String clientSecret = "URZWgVDNLiFsnJV5t4SJadZY";
-    String redirectUri = "http://localhost:8080/login";
-
-    public void getToken() {
-        try {
-            // Формирование POST запроса к Google для получения токена
-            String requestUrl = "https://accounts.google.com/o/oauth2/token";
-            String postData = "code=" + URLEncoder.encode(code, StandardCharsets.UTF_8) +
-                    "&client_id=" + URLEncoder.encode(clientId, StandardCharsets.UTF_8) +
-                    "&client_secret=" + URLEncoder.encode(clientSecret, StandardCharsets.UTF_8) +
-                    "&redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8) +
-                    "&grant_type=authorization_code";
-
-            System.out.println(postData);
-
-            URL url = new URL(requestUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setDoOutput(true);
-            connection.getOutputStream().write(postData.getBytes(StandardCharsets.UTF_8));
-
-            // Чтение ответа от сервера Google
-            InputStream responseStream = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            // Декодирование ответа и получение токена
-            String responseJson = response.toString();
-            String accessToken = null;
-            if (responseJson.contains("access_token")) {
-                int startIndex = responseJson.indexOf("access_token") + 15;
-                int endIndex = responseJson.indexOf("\"", startIndex);
-                accessToken = responseJson.substring(startIndex, endIndex);
-                System.out.println("accessToken = " + accessToken);
-            }
-
-            /*// Использование полученного токена для запросов к Google API
-            if (accessToken != null) {
-                String apiUrl = "https://www.googleapis.com/your_api_endpoint";
-                URL apiURL = new URL(apiUrl);
-                HttpURLConnection apiConnection = (HttpURLConnection) apiURL.openConnection();
-                apiConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
-
-                // ... делать запросы к Google API ...
-
-                apiConnection.disconnect();
-            }*/
-
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @SneakyThrows
     public void sendOAuthOffer(String userId) {
